@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "esnext",
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "module": "nodenext",
+    "allowJs": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "jsxFactory": "",
+    "jsxFragmentFactory": "",
+    "baseUrl": ".",
+    "paths": {
+      "jotai-scheduler": ["./src/index.ts"]
+    }
+  },
+  "exclude": ["dist", "examples", "jotai"]
+}
