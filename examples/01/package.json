@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "jotai-scheduler": "^0.0.1",
     "jotai": "latest",
     "react": "latest",
     "react-dom": "latest",
