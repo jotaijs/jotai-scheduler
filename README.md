@@ -19,19 +19,23 @@ pnpm add jotai-scheduler
 
 The usage of jotai-scheduler is very similar to jotai itself. The only difference from the native Jotai API is that it requires passing a priority parameter:
 
-```
-import { useAtomValue } from 'jotai-scheduler'
+- jotai
 
-const num = useAtomValue(anAtom, {});
-```
+  ```
+  import { useAtomValue } from 'jotai-scheduler'
 
-```
-import { LowPriority, useAtomValueWithSchedule } from 'jotai-scheduler'
+  const num = useAtomValue(anAtom, {});
+  ```
 
-const num = useAtomValueWithSchedule(anAtom, {
-  priority: LowPriority,
-});
-```
+- jotai-scheduler
+
+  ```
+  import { LowPriority, useAtomValueWithSchedule } from 'jotai-scheduler'
+
+  const num = useAtomValueWithSchedule(anAtom, {
+    priority: LowPriority,
+  });
+  ```
 
 The field `priority` can be can be `ImmediatePriority`, `NormalPriority`, or `LowPriority`. If you don't pass any priority, it will use `NormalPriority` by default, and its behavior is the same as jotai.
 
@@ -48,18 +52,13 @@ Now you can use jotai-scheduler to replace jotai in your project.
 Let's say we have an app that contains typical elements such as the Header, Footer, Sidebar, and Content:
 
 <div align="center">
-  <img src="./img/demo.png" width="700">
+  <img src="./img/demo.png" width="400">
 </div>
 
 Every element represents a component, and all these components share the same state. When we click the button, the state will be updated, and all components will be re-rendered. While we were using jotai, the code might have looked like this:
 
 ```
 const anAtom = atom(0);
-
-const simulateHeavyRender = () => {
-  const start = performance.now();
-  while (performance.now() - start < 500) {}
-};
 
 const Header = () => {
   const num = useAtomValue(anAtom);
@@ -88,7 +87,7 @@ const Content = () => {
 ```
 
 <div align="center">
-  <img src="./img/before-optimization.gif" width="500">
+  <img src="./img/before-optimization.gif" width="400">
 </div>
 
 When we click the button, the rendering seems a bit laggy, right? That's because we need to wait for all the components to render. But not all components have the same priority. A better way is to render the important content first, and then the rest, the more important content will be shown more quickly.
@@ -98,6 +97,8 @@ Let's say the priority of those components is Content > Sidebar > Header = Foote
 Now let's use jotai-scheduler to optimize it:
 
 ```
+const anAtom = atom(0);
+
 const Header = () => {
   const num = useAtomValueWithSchedule(anAtom, {
     priority: LowPriority,
@@ -131,7 +132,7 @@ const Content = () => {
 ```
 
 <div align="center">
-  <img src="./img/after-optimization.gif" width="500">
+  <img src="./img/after-optimization.gif" width="400">
 </div>
 
 The performance is better. Important content will be displayed to users more quickly, thereby providing a better user experience.
