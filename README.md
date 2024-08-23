@@ -41,9 +41,9 @@ The field `priority` can be can be `ImmediatePriority`, `NormalPriority`, or `Lo
 
 Now you can use jotai-scheduler to replace jotai in your project.
 
-- useAtom --> useAtomWithSchedule
-- useAtomValue --> useAtomValueWithSchedule
-- useSetAtom --> useSetAtomWithSchedule
+- `useAtom` --> `useAtomWithSchedule`
+- `useAtomValue` --> `useAtomValueWithSchedule`
+- `useSetAtom` --> `useSetAtomWithSchedule`
 
 ## Why we need jotai-scheduler?
 

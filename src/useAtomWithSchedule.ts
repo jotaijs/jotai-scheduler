@@ -9,10 +9,7 @@ import type {
 } from 'jotai';
 import { useAtomValueWithSchedule } from './useAtomValueWithSchedule';
 import { useSetAtomWithSchedule } from './useSetAtomWithSchedule';
-
-type SetAtom<Args extends unknown[], Result> = (...args: Args) => Result;
-
-type Options = Parameters<typeof useAtomValueWithSchedule>[1];
+import { Options, SetAtom } from './types';
 
 export function useAtomWithSchedule<Value, Args extends unknown[], Result>(
   atom: WritableAtom<Value, Args, Result>,

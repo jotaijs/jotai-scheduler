@@ -1,9 +1,7 @@
 import { useCallback } from 'react';
 import type { ExtractAtomArgs, ExtractAtomResult, WritableAtom } from 'jotai';
 import { useStore } from 'jotai';
-
-type SetAtom<Args extends unknown[], Result> = (...args: Args) => Result;
-type Options = Parameters<typeof useStore>[0];
+import { Options, SetAtom } from './types';
 
 export function useSetAtomWithSchedule<Value, Args extends unknown[], Result>(
   atom: WritableAtom<Value, Args, Result>,

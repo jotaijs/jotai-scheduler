@@ -4,45 +4,21 @@ import { useDebugValue, useEffect, useReducer } from 'react';
 import type { ReducerWithoutAction } from 'react';
 import type { Atom, ExtractAtomValue } from 'jotai';
 import { useStore } from 'jotai';
-import {
-  ImmediatePriority,
-  LowPriority,
-  NormalPriority,
-  PriorityLevel,
-} from './constants';
+
+import { NormalPriority } from './constants';
 import { isLastElement, isPromiseLike, use } from './utils';
+import { addTask, initiateWorkLoop } from './workLoop';
+import { AnyAtom, Options, Store, PriorityLevel, Listener } from './types';
 
-type Store = ReturnType<typeof useStore>;
-
-type AnyAtom = Atom<unknown>;
-
-type Options = Parameters<typeof useStore>[0] & {
-  delay?: number;
-  priority?: PriorityLevel;
-};
-
-const ImmediatePriorityReRenderMap = new Map<AnyAtom, Set<() => void>>();
-const NormalPriorityPriorityReRenderMap = new Map<AnyAtom, Set<() => void>>();
-const LowPriorityReRenderMap = new Map<AnyAtom, Set<() => void>>();
-const allReRenderMap = new Set<() => void>();
-
-const priorityMap = new Map<
-  PriorityLevel,
-  | typeof ImmediatePriorityReRenderMap
-  | typeof NormalPriorityPriorityReRenderMap
-  | typeof LowPriorityReRenderMap
->([
-  [ImmediatePriority, ImmediatePriorityReRenderMap],
-  [NormalPriority, NormalPriorityPriorityReRenderMap],
-  [LowPriority, LowPriorityReRenderMap],
-]);
+const prioritySubscriptionsMap = new Map<Listener, PriorityLevel>();
+const atomListenersMap = new Map<AnyAtom, Set<Listener>>();
 
 export function useAtomValueWithSchedule<Value>(
   atom: Atom<Value>,
   options?: Options,
 ): Awaited<Value>;
 
-export function useAtomValueWithSchedule<AtomType extends Atom<unknown>>(
+export function useAtomValueWithSchedule<AtomType extends AnyAtom>(
   atom: AtomType,
   options?: Options,
 ): Awaited<ExtractAtomValue<AtomType>>;
@@ -81,6 +57,7 @@ export function useAtomValueWithSchedule<Value>(
 
   const delay = options?.delay;
   const priority = options?.priority ?? NormalPriority;
+
   useEffect(() => {
     const subscribe = () => {
       if (typeof delay === 'number') {
@@ -91,31 +68,29 @@ export function useAtomValueWithSchedule<Value>(
       rerender();
     };
 
-    const listener = priorityMap.get(priority)!.get(atom) ?? new Set();
-    allReRenderMap.add(subscribe);
-    listener.add(subscribe);
-    priorityMap.get(priority)!.set(atom, listener);
+    prioritySubscriptionsMap.set(subscribe, priority);
+    const listeners = atomListenersMap.get(atom) ?? new Set();
+    listeners.add(subscribe);
+    atomListenersMap.set(atom, listeners);
 
     const unsub = store.sub(atom, () => {
-      if (isLastElement(allReRenderMap, subscribe)) {
-        requestAnimationFrame(() => {
-          ImmediatePriorityReRenderMap.get(atom)?.forEach((l) => l());
-          requestAnimationFrame(() => {
-            NormalPriorityPriorityReRenderMap.get(atom)?.forEach((l) => l());
-            requestAnimationFrame(() => {
-              LowPriorityReRenderMap.get(atom)?.forEach((l) => l());
-            });
+      if (isLastElement(listeners, subscribe)) {
+        for (const listener of listeners) {
+          addTask({
+            subscribe: listener,
+            priority: prioritySubscriptionsMap.get(subscribe)!,
           });
-        });
+        }
+        initiateWorkLoop();
       }
     });
-    rerender();
+
     return () => {
       unsub();
-      listener.delete(rerender);
-      allReRenderMap.delete(rerender);
+      prioritySubscriptionsMap.delete(subscribe);
+      listeners.delete(subscribe);
     };
-  }, [store, atom, delay, priority]);
+  }, [atom, delay, priority, store]);
 
   useDebugValue(value);
   // TS doesn't allow using `use` always.
