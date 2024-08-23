@@ -1,0 +1,31 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .header, .footer, .sidebar, .content {
+    border: 2px solid black;
+    padding: 20px;
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  
+  .footer {
+    margin-top: auto;
+  }
+  
+  .body {
+    display: flex;
+    flex: 1;
+  }
+  
+  .sidebar {
+    width: 200px;
+  }
+  
+  .content {
+    flex: 1;
+  }
+  

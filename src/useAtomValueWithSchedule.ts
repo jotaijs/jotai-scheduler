@@ -78,7 +78,7 @@ export function useAtomValueWithSchedule<Value>(
         for (const listener of listeners) {
           addTask({
             subscribe: listener,
-            priority: prioritySubscriptionsMap.get(subscribe)!,
+            priority: prioritySubscriptionsMap.get(listener)!,
           });
         }
         initiateWorkLoop();

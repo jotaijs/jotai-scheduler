@@ -1,10 +1,10 @@
 {
   "name": "jotai-scheduler",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "author": "Lincoln",
   "repository": {
     "type": "git",
-    "url": "https://github.com/L-Qun/jotai-scheduler"
+    "url": "https://github.com/jotaijs/jotai-scheduler"
   },
   "source": "./src/index.ts",
   "main": "./dist/index.umd.js",
@@ -21,12 +21,12 @@
   },
   "sideEffects": false,
   "files": [
-    "src",
     "dist"
   ],
   "scripts": {
     "compile": "microbundle build -f modern,umd --globals react=React --no-compress",
     "postcompile": "cp dist/index.modern.mjs dist/index.modern.js && cp dist/index.modern.mjs.map dist/index.modern.js.map",
+    "prepublishOnly": "pnpm run compile && pnpm run postcompile",
     "test": "run-s eslint tsc-test jest",
     "eslint": "eslint --ext .js,.ts,.tsx .",
     "jest": "jest",
