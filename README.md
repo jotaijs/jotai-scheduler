@@ -1,6 +1,6 @@
 # jotai-scheduler
 
-<p align="center">
+<p>
   <a href="https://github.com/jotaijs/jotai-scheduler/blob/main/.github/workflows/test.yml"><img src="https://github.com/jotaijs/jotai-scheduler/actions/workflows/test.yml/badge.svg" alt="GitHub Actions status"></a>
   <a href= "https://github.com/prettier/prettier"><img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg"></a>
   <a href="https://github.com/facebook/jest"><img src="https://img.shields.io/badge/tested_with-jest-99424f.svg" alt="Tested with Jest"></a>
