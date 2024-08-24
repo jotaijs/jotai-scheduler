@@ -27,10 +27,16 @@
     "compile": "microbundle build -f modern,umd --globals react=React --no-compress",
     "postcompile": "cp dist/index.modern.mjs dist/index.modern.js && cp dist/index.modern.mjs.map dist/index.modern.js.map",
     "prepublishOnly": "pnpm run compile && pnpm run postcompile",
-    "test": "run-s eslint tsc-test jest",
-    "eslint": "eslint --ext .js,.ts,.tsx .",
-    "jest": "jest",
-    "tsc-test": "tsc --project . --noEmit"
+    "test": "jest --passWithNoTests",
+    "eslint": "eslint --no-eslintrc -c .eslintrc.json --fix '**/src/*.{js,jsx,ts,tsx}'",
+    "eslint:ci": "eslint --no-eslintrc -c .eslintrc.json '**/src/*.{js,jsx,ts,tsx}'",
+    "prettier": "prettier '**/{examples,src,__tests__,website}/**/*.{js,jsx,ts,tsx,md}' --write",
+    "prettier:ci": "prettier '**/{examples,src,__tests__,website}/**/*.{js,jsx,ts,tsx,md}' --list-different",
+    "typecheck": "tsc --project . --noEmit"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   },
   "jest": {
     "testEnvironment": "jsdom",

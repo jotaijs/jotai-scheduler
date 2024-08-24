@@ -6,25 +6,25 @@ import type {
   PrimitiveAtom,
   SetStateAction,
   WritableAtom,
-} from 'jotai';
-import { useAtomValueWithSchedule } from './useAtomValueWithSchedule';
-import { useSetAtomWithSchedule } from './useSetAtomWithSchedule';
-import { Options, SetAtom } from './types';
+} from 'jotai'
+import { useAtomValueWithSchedule } from './useAtomValueWithSchedule'
+import { useSetAtomWithSchedule } from './useSetAtomWithSchedule'
+import { Options, SetAtom } from './types'
 
 export function useAtomWithSchedule<Value, Args extends unknown[], Result>(
   atom: WritableAtom<Value, Args, Result>,
   options?: Options,
-): [Awaited<Value>, SetAtom<Args, Result>];
+): [Awaited<Value>, SetAtom<Args, Result>]
 
 export function useAtomWithSchedule<Value>(
   atom: PrimitiveAtom<Value>,
   options?: Options,
-): [Awaited<Value>, SetAtom<[SetStateAction<Value>], void>];
+): [Awaited<Value>, SetAtom<[SetStateAction<Value>], void>]
 
 export function useAtomWithSchedule<Value>(
   atom: Atom<Value>,
   options?: Options,
-): [Awaited<Value>, never];
+): [Awaited<Value>, never]
 
 export function useAtomWithSchedule<
   AtomType extends WritableAtom<unknown, never[], unknown>,
@@ -34,12 +34,12 @@ export function useAtomWithSchedule<
 ): [
   Awaited<ExtractAtomValue<AtomType>>,
   SetAtom<ExtractAtomArgs<AtomType>, ExtractAtomResult<AtomType>>,
-];
+]
 
 export function useAtomWithSchedule<AtomType extends Atom<unknown>>(
   atom: AtomType,
   options?: Options,
-): [Awaited<ExtractAtomValue<AtomType>>, never];
+): [Awaited<ExtractAtomValue<AtomType>>, never]
 
 export function useAtomWithSchedule<Value, Args extends unknown[], Result>(
   atom: Atom<Value> | WritableAtom<Value, Args, Result>,
@@ -49,5 +49,5 @@ export function useAtomWithSchedule<Value, Args extends unknown[], Result>(
     useAtomValueWithSchedule(atom, options),
     // We do wrong type assertion here, which results in throwing an error.
     useSetAtomWithSchedule(atom as WritableAtom<Value, Args, Result>, options),
-  ];
+  ]
 }

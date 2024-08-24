@@ -1,48 +1,48 @@
-import { Task } from './types';
+import { Task } from './types'
 
-let isMessageLoopRunning: boolean = false;
+let isMessageLoopRunning: boolean = false
 
-const taskQueue: Array<Task> = [];
+const taskQueue: Array<Task> = []
 
 function workLoop(): boolean {
-  const highestPriority = Math.min(...taskQueue.map((task) => task.priority));
+  const highestPriority = Math.min(...taskQueue.map((task) => task.priority))
   const highestPriorityList = taskQueue.filter(
     (task) => task.priority === highestPriority,
-  );
+  )
   highestPriorityList.forEach((task) => {
-    task.subscribe();
-    taskQueue.splice(taskQueue.indexOf(task), 1);
-  });
+    task.subscribe()
+    taskQueue.splice(taskQueue.indexOf(task), 1)
+  })
   if (taskQueue.length > 0) {
-    return true;
+    return true
   }
-  return false;
+  return false
 }
 
 function handleNextBatch() {
-  const hasMoreWork = workLoop();
+  const hasMoreWork = workLoop()
   if (hasMoreWork) {
-    enqueueWorkExecution();
+    enqueueWorkExecution()
   } else {
-    isMessageLoopRunning = false;
+    isMessageLoopRunning = false
   }
 }
 
-const channel = new MessageChannel();
-const port = channel.port2;
-channel.port1.onmessage = handleNextBatch;
+const channel = new MessageChannel()
+const port = channel.port2
+channel.port1.onmessage = handleNextBatch
 
 export const enqueueWorkExecution = () => {
-  port.postMessage(null);
-};
+  port.postMessage(null)
+}
 
 export const initiateWorkLoop = () => {
   if (!isMessageLoopRunning) {
-    isMessageLoopRunning = true;
-    enqueueWorkExecution();
+    isMessageLoopRunning = true
+    enqueueWorkExecution()
   }
-};
+}
 
 export const addTask = (newTask: Task) => {
-  taskQueue.push(newTask);
-};
+  taskQueue.push(newTask)
+}
