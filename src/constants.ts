@@ -1,3 +1,7 @@
-export const ImmediatePriority = 1
-export const NormalPriority = 2
-export const LowPriority = 3
+export const IMMEDIATE_PRIORITY = 1
+export const NORMAL_PRIORITY = 2
+export const LOW_PRIORITY = 3
+
+export const IMMEDIATE_PRIORITY_TIMEOUT = -1
+export const NORMAL_PRIORITY_TIMEOUT = 5000
+export const LOW_PRIORITY_TIMEOUT = 10000

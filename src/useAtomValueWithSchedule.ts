@@ -5,13 +5,12 @@ import type { ReducerWithoutAction } from 'react'
 import type { Atom, ExtractAtomValue } from 'jotai'
 import { useStore } from 'jotai'
 
-import { NormalPriority } from './constants'
-import { isLastElement, isPromiseLike, use } from './utils'
+import { NORMAL_PRIORITY } from './constants'
+import { isPromiseLike, use } from './utils'
 import { addTask, initiateWorkLoop } from './workLoop'
 import { AnyAtom, Options, Store, PriorityLevel, Listener } from './types'
 
 const prioritySubscriptionsMap = new Map<Listener, PriorityLevel>()
-const atomListenersMap = new Map<AnyAtom, Set<Listener>>()
 
 export function useAtomValueWithSchedule<Value>(
   atom: Atom<Value>,
@@ -56,7 +55,7 @@ export function useAtomValueWithSchedule<Value>(
   }
 
   const delay = options?.delay
-  const priority = options?.priority ?? NormalPriority
+  const priority = options?.priority ?? NORMAL_PRIORITY
 
   useEffect(() => {
     const subscribe = () => {
@@ -69,26 +68,15 @@ export function useAtomValueWithSchedule<Value>(
     }
 
     prioritySubscriptionsMap.set(subscribe, priority)
-    const listeners = atomListenersMap.get(atom) ?? new Set()
-    listeners.add(subscribe)
-    atomListenersMap.set(atom, listeners)
 
     const unsub = store.sub(atom, () => {
-      if (isLastElement(listeners, subscribe)) {
-        for (const listener of listeners) {
-          addTask({
-            subscribe: listener,
-            priority: prioritySubscriptionsMap.get(listener)!,
-          })
-        }
-        initiateWorkLoop()
-      }
+      addTask(prioritySubscriptionsMap.get(subscribe)!, subscribe)
+      initiateWorkLoop()
     })
 
     return () => {
       unsub()
       prioritySubscriptionsMap.delete(subscribe)
-      listeners.delete(subscribe)
     }
   }, [atom, delay, priority, store])
 

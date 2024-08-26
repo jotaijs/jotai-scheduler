@@ -1,6 +1,7 @@
 import ReactExports from 'react'
+import { Listener } from './types'
 
-export function isLastElement(set: Set<() => void>, element: () => void) {
+export function isLastElement(set: Set<Listener>, element: Listener) {
   const iterator = set.values()
   let result = iterator.next()
   let last = result.value

@@ -2,8 +2,8 @@ import { atom, useAtom, useAtomValue } from 'jotai'
 import {
   useAtomValueWithSchedule,
   useAtomWithSchedule,
-  ImmediatePriority,
-  LowPriority,
+  IMMEDIATE_PRIORITY,
+  LOW_PRIORITY,
 } from 'jotai-scheduler'
 
 import './App.css'
@@ -20,7 +20,7 @@ function Header() {
   // const num = useAtomValue(anAtom);
   console.log('Header Component Render')
   const num = useAtomValueWithSchedule(anAtom, {
-    priority: LowPriority,
+    priority: LOW_PRIORITY,
   })
   return <div className="header">Header-{num}</div>
 }
@@ -30,7 +30,7 @@ function Footer() {
   // const num = useAtomValue(anAtom);
   console.log('Footer Component Render')
   const num = useAtomValueWithSchedule(anAtom, {
-    priority: LowPriority,
+    priority: LOW_PRIORITY,
   })
   return <div className="footer">Footer-{num}</div>
 }
@@ -48,7 +48,7 @@ function Content() {
   // const [num, setNum] = useAtom(anAtom);
   console.log('Content Component Render')
   const [num, setNum] = useAtomWithSchedule(anAtom, {
-    priority: ImmediatePriority,
+    priority: IMMEDIATE_PRIORITY,
   })
   return (
     <div className="content">

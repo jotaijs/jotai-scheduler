@@ -1,5 +1,5 @@
 import { Atom, useStore } from 'jotai'
-import { ImmediatePriority, LowPriority, NormalPriority } from './constants'
+import { IMMEDIATE_PRIORITY, NORMAL_PRIORITY, LOW_PRIORITY } from './constants'
 
 export type SetAtom<Args extends unknown[], Result> = (...args: Args) => Result
 
@@ -10,9 +10,9 @@ export type Store = ReturnType<typeof useStore>
 export type Listener = () => void
 
 export type PriorityLevel =
-  | typeof ImmediatePriority
-  | typeof NormalPriority
-  | typeof LowPriority
+  | typeof IMMEDIATE_PRIORITY
+  | typeof LOW_PRIORITY
+  | typeof NORMAL_PRIORITY
 
 export type Options = Parameters<typeof useStore>[0] & {
   delay?: number
@@ -22,4 +22,5 @@ export type Options = Parameters<typeof useStore>[0] & {
 export type Task = {
   priority: PriorityLevel
   subscribe: Listener
+  expirationTime: number
 }

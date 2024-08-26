@@ -38,14 +38,14 @@ The usage of jotai-scheduler is very similar to jotai itself. The only differenc
 - jotai-scheduler
 
   ```
-  import { LowPriority, useAtomValueWithSchedule } from 'jotai-scheduler'
+  import { LOW_PRIORITY, useAtomValueWithSchedule } from 'jotai-scheduler'
 
   const num = useAtomValueWithSchedule(anAtom, {
-    priority: LowPriority,
+    priority: LOW_PRIORITY,
   });
   ```
 
-The field `priority` can be can be `ImmediatePriority`, `NormalPriority`, or `LowPriority`. If you don't pass any priority, it will use `NormalPriority` by default, and its behavior is the same as jotai.
+The field `priority` can be can be `IMMEDIATE_PRIORITY`, `NORMAL_PRIORITY`, or `LOW_PRIORITY`. If you don't pass any priority, it will use `NORMAL_PRIORITY` by default, and its behavior is the same as jotai.
 
 Now you can use jotai-scheduler to replace jotai in your project.
 

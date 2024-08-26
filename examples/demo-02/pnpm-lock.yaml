@@ -15,8 +15,8 @@ dependencies:
     specifier: latest
     version: 2.9.3(@types/react@18.3.4)(react@18.3.1)
   jotai-scheduler:
-    specifier: ^0.0.4
-    version: 0.0.4(jotai@2.9.3)(react@18.3.1)
+    specifier: ^0.0.5
+    version: 0.0.5(jotai@2.9.3)(react@18.3.1)
   react:
     specifier: latest
     version: 18.3.1
@@ -6770,8 +6770,8 @@ packages:
     hasBin: true
     dev: false
 
-  /jotai-scheduler@0.0.4(jotai@2.9.3)(react@18.3.1):
-    resolution: {integrity: sha512-duJoL2x2XCnHfJ1xMuaierUAg14PjATYVPtvLhUgzg1RXDNxXdMLiOmDCptn9cKcYb7tuVC+/LKWYhmzUB/cHQ==}
+  /jotai-scheduler@0.0.5(jotai@2.9.3)(react@18.3.1):
+    resolution: {integrity: sha512-1Qcav1nsnwynoiqS6rLithQ/DgVHc40XbGDBau27/IeiN0EyvpujlI9UbA8cfEuc2OS7kLMplGi9d4VQRFvDNg==}
     peerDependencies:
       jotai: '>=2.9.2'
       react: '>=17.0.0'

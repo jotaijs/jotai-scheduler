@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from 'react'
 import { atom, useAtom } from 'jotai'
 import {
   useAtomWithSchedule,
-  NormalPriority,
-  ImmediatePriority,
+  NORMAL_PRIORITY,
+  IMMEDIATE_PRIORITY,
 } from 'jotai-scheduler'
 
 const anAtom = atom(0)
@@ -41,7 +41,7 @@ const Item = () => {
   const [ref, isVisible] = useIsVisible()
   // const [num, setNum] = useAtom(anAtom);
   const [num, setNum] = useAtomWithSchedule(anAtom, {
-    priority: isVisible ? ImmediatePriority : NormalPriority,
+    priority: isVisible ? IMMEDIATE_PRIORITY : NORMAL_PRIORITY,
   })
   return (
     <div
