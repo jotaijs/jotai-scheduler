@@ -47,12 +47,18 @@ function handleNextBatch() {
   }
 }
 
-const channel = new MessageChannel()
-const port = channel.port2
-channel.port1.onmessage = handleNextBatch
-
-export const enqueueWorkExecution = () => {
-  port.postMessage(null)
+let enqueueWorkExecution: () => void
+if (typeof MessageChannel !== 'undefined') {
+  const channel = new MessageChannel()
+  const port = channel.port2
+  channel.port1.onmessage = handleNextBatch
+  enqueueWorkExecution = (): void => {
+    port.postMessage(null)
+  }
+} else {
+  enqueueWorkExecution = (): void => {
+    setTimeout(handleNextBatch, 0)
+  }
 }
 
 export const initiateWorkLoop = () => {

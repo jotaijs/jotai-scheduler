@@ -17,5 +17,6 @@
       "jotai-scheduler": ["./src/index.ts"]
     }
   },
+  "include": ["src", "__tests__"],
   "exclude": ["dist", "examples", "jotai"]
 }

@@ -109,14 +109,14 @@ const anAtom = atom(0);
 
 const Header = () => {
   const num = useAtomValueWithSchedule(anAtom, {
-    priority: LowPriority,
+    priority: LOW_PRIORITY,
   });
   return <div className="header">Header-{num}</div>;
 };
 
 const Footer = () => {
   const num = useAtomValueWithSchedule(anAtom, {
-    priority: LowPriority,
+    priority: LOW_PRIORITY,
   });
   return <div className="footer">Footer-{num}</div>;
 };
@@ -128,7 +128,7 @@ const Sidebar = () => {
 
 const Content = () => {
   const [num, setNum] = useAtomWithSchedule(anAtom, {
-    priority: ImmediatePriority,
+    priority: IMMEDIATE_PRIORITY,
   });
   return (
     <div className="content">
