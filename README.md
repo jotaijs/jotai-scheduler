@@ -98,7 +98,15 @@ const Content = () => {
   <img src="./img/before-optimization.gif" width="400">
 </div>
 
-When we click the button, the rendering seems a bit laggy, right? That's because we need to wait for all the components to render. But not all components have the same priority. A better way is to render the important content first, and then the rest, the more important content will be shown more quickly.
+When we click the button, the rendering seems a bit laggy, right? That's because we need to wait for all the components to render.
+
+When we open the Chrome Performance tool, we can see:
+
+<div align="center">
+  <img src="./img/before-optimization-performance.png" width="400">
+</div>
+
+This means it is not good for the user experience. But not all components have the same priority. A better way is to render the important content first, and then the rest, the more important content will be shown more quickly.
 
 Let's say the priority of those components is Content > Sidebar > Header = Footer, then we can pass a `priority` field to represent the priority of each component.
 
@@ -141,6 +149,12 @@ const Content = () => {
 
 <div align="center">
   <img src="./img/after-optimization.gif" width="400">
+</div>
+
+When we open the Chrome Performance tool, we can see:
+
+<div align="center">
+  <img src="./img/after-optimization-performance.png" width="400">
 </div>
 
 The performance is better. Important content will be displayed to users more quickly, thereby providing a better user experience.
